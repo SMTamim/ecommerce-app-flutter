@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:basic_ecommerce/ui/home_page.dart';
 import 'package:basic_ecommerce/ui/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -16,7 +20,29 @@ class _LoginState extends State<Login> {
   // controller for the two text inputs
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  
+  var _username, _password;
   var _hide_password = true;
+  var _warningText = "";
+
+  void _login() async {
+    var response = await http.post(
+        Uri.parse('http://python.tech-slave.com/api/login'),
+        body: {"username": _username, "password": _password});
+    setState(() {
+      try {
+        var login_response = jsonDecode(response.body);
+        if (login_response['success']) {
+          Navigator.pushReplacement(
+              context, CupertinoPageRoute(builder: (_) => const HomePage()));
+        } else {
+          _warningText = "Invalid Username or Password!";
+        }
+      } catch (error) {
+        print(response.body);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +68,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Text(
-                    "Sign In",
+                    "Login",
                     style: TextStyle(fontSize: 22.sp, color: Colors.white),
                   ),
                 ],
@@ -99,6 +125,11 @@ class _LoginState extends State<Login> {
                         Expanded(
                             child: TextField(
                           controller: _usernameController,
+                          onChanged: (value) {
+                            setState(() {
+                              _warningText = '';
+                            });
+                          },
                           decoration: InputDecoration(
                               hintText: 'John',
                               hintStyle: TextStyle(
@@ -130,6 +161,11 @@ class _LoginState extends State<Login> {
                         Expanded(
                           child: TextField(
                             controller: _passwordController,
+                            onChanged: (value) {
+                              setState(() {
+                                _warningText = '';
+                              });
+                            },
                             obscureText: _hide_password,
                             decoration: InputDecoration(
                                 hintText: 'Password',
@@ -159,15 +195,31 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     SizedBox(
-                      height: 60.h,
+                      height: 50.h,
                     ),
-                    Container(
+                    SizedBox(
+                      width: ScreenUtil().screenWidth,
+                      child: Text(
+                        _warningText,
+                        style: TextStyle(fontSize: 18.sp, color: Colors.red),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    SizedBox(
                       width: ScreenUtil().screenWidth,
                       height: 55.h,
                       child: ElevatedButton(
-                          onPressed: (() => {setState(() => {})}),
+                          onPressed: (() => {
+                                setState(() => {
+                                      _username = _usernameController.text,
+                                      _password = _passwordController.text,
+                                      _login(),
+                                    })
+                              }),
                           child: Text(
-                            'Sing In',
+                            'Login',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 22.sp),
                           )),

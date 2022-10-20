@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.shop_rounded),
-        title: Text("Basic E-commerce"),
+        title: Text("NUBTK Shop"),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
       ),
