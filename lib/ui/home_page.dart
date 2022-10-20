@@ -57,7 +57,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.shop_rounded),
         title: Text("NUBTK Shop"),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
@@ -199,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                       fit: BoxFit.cover,
                                     ),
                                   )),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Text(getProdName(
                                   _products[index]['prod_name'].toString())),
                               Text(

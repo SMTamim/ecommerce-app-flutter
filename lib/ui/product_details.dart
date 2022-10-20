@@ -1,3 +1,5 @@
+import 'package:basic_ecommerce/ui/cart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -128,11 +130,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => Cart(widget._product)));
+                    },
                     style: ElevatedButton.styleFrom(
                         primary: Colors.blueAccent, elevation: 3),
                     child: const Text(
-                      'Add to Cart',
+                      'Buy Now',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
