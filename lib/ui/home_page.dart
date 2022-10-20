@@ -114,17 +114,42 @@ class _HomePageState extends State<HomePage> {
                 height: 10.h,
               ),
               AspectRatio(
-                  aspectRatio: 3.5,
+                  aspectRatio: 3,
                   child: CarouselSlider(
                     items: _carouselImages
                         .map((img) => Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: Container(
+                                width: ScreenUtil().screenWidth,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.r),
                                     image: DecorationImage(
                                         image: NetworkImage(img),
-                                        fit: BoxFit.fitWidth)),
+                                      fit: BoxFit.cover,
+                                    )),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(200, 0, 0, 0),
+                                        Color.fromARGB(0, 0, 0, 0)
+                                      ],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 20.0),
+                                  margin: EdgeInsets.only(top: 90.h),
+                                  child: Text(
+                                    'No. ${_carouselImages.indexOf(img) + 1} Wallpaper',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ))
                         .toList(),
