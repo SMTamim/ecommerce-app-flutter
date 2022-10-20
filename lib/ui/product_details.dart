@@ -31,7 +31,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        title: const Text("Basic E-commerce"),
+        title: const Text("NUBTK Shop"),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
       ),
@@ -59,11 +59,11 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: FittedBox(
+                    fit: BoxFit.fill,
                     child: Image.network(
-                      widget._product['prod_img'],
+                      "http://python.tech-slave.com/static/uploads/${widget._product['prod_img']}",
                       fit: BoxFit.fitWidth,
                     ),
-                    fit: BoxFit.fill,
                   )),
             ),
             Container(
@@ -123,7 +123,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(bottom: 20.w),
-                width: 1.sw,
+                width: ScreenUtil().screenWidth,
                 height: 56.h,
                 child: Align(
                   alignment: FractionalOffset.bottomCenter,
